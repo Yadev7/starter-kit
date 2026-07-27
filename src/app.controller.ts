@@ -1,5 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { ApiOperation, ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Role } from '@prisma/client';
+import { Roles } from './common/decorators/roles.decorator';
+import { RolesGuard } from './common/guards/roles.guard';
+import { Public } from './common/decorators/public.decorator';
 
 @ApiTags('System') // Groups these endpoints under "System" in Swagger
 @Controller()
@@ -54,6 +58,9 @@ getHello() {
     message: 'System is operational. 🚀',
   };
 }
+
+
+  @Public()
   @Get('health')
   @ApiOperation({ 
     summary: 'Health Check', 
@@ -68,5 +75,20 @@ getHello() {
       memoryUsage: process.memoryUsage().heapUsed / 1024 / 1024 + ' MB',
       environment: process.env.NODE_ENV || 'development',
     };
+  }
+
+
+  @Roles(Role.ADMIN) // 👈 تحديد صلاحية الأدمن فقط
+  @UseGuards(RolesGuard)
+  @ApiBearerAuth()
+  @Get('admin-only-data')
+  @ApiOperation({ 
+    summary: 'Admin Protected Route', 
+    description: 'Endpoint strictly accessible by users with ADMIN role' 
+  })
+  @ApiResponse({ status: 200, description: 'Success' })
+  @ApiResponse({ status: 403, description: 'Forbidden Resource (Not an Admin)' })
+  getAdminData() {
+    return { message: 'Welcome Admin! You have access to top-secret SaaS data. 🚀' };
   }
 }

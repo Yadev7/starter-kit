@@ -1,4 +1,4 @@
-// This allows you to do CRUD for ANY model in 1 line of code
+// src/common/base.service.ts
 export abstract class BaseService<T> {
   constructor(protected readonly prismaEntity: any) {}
 
@@ -12,5 +12,10 @@ export abstract class BaseService<T> {
 
   async delete(id: number) {
     return this.prismaEntity.delete({ where: { id } });
+  }
+
+  // 👈 أضف دالة remove لتطابق Controller أو غير اسم delete لـ remove
+  async remove(id: number) {
+    return this.delete(id);
   }
 }

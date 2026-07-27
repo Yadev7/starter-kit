@@ -1,98 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+# 🚀 Production-Ready NestJS SaaS Starter Kit
+
+<p center="align">
+  <b>An enterprise-grade, battle-tested, and secure NestJS Boilerplate</b><br>
+  Save 40+ hours of setup and kickstart your next SaaS product in minutes!
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🌟 Overview
 
-## Description
+Building a SaaS requires a rock-solid foundation. This Starter Kit provides everything you need—from **JWT Authentication with Refresh Token Rotation** and **Role-Based Access Control (RBAC)** to **Prisma ORM integration** and **Production-Ready Security (Helmet & Rate Limiting)**.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Designed with clean architecture and scalable NestJS best practices.
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## ✨ Key Features
 
-## Compile and run the project
+* **🔐 Authentication & Session Management:**
+  * JWT Access Tokens (Short-lived) & Refresh Tokens (Long-lived & Hashed).
+  * Secure password hashing using `bcrypt`.
+  * Automatic token rotation and revocation on logout.
+* **🛡️ Role-Based Access Control (RBAC):**
+  * Pre-configured roles: `ADMIN`, `USER`, `PROVIDER`.
+  * Custom `@Roles()` decorator and `RolesGuard`.
+* **🗄️ Database & ORM:**
+  * **PostgreSQL** ready with **Prisma ORM**.
+  * Pre-configured migrations and schema setups.
+* **⚡ Enterprise Security:**
+  * **Rate Limiting / Throttling:** Brute-force attack protection via `@nestjs/throttler`.
+  * **HTTP Security Headers:** Protected against common vulnerabilities using `helmet`.
+  * Global Validation Pipes for strict Request DTO validation.
+* **📖 Interactive API Documentation:**
+  * Full OpenAPI / **Swagger UI** configured out-of-the-box (`/api/docs`).
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## 🏗️ Project Architecture
 
-# production mode
-$ npm run start:prod
-```
+```text
+src/
+├── common/             # Global Decorators, Guards, and Utilities
+│   ├── decorators/     # Custom decorators (@Public, @Roles, @GetCurrentUser)
+│   └── guards/         # Security guards (AtGuard, RtGuard, RolesGuard)
+├── modules/            # Domain Modules
+│   └── auth/           # Complete Auth System (Controllers, Services, Strategies)
+├── prisma/             # Prisma Database Service & Config
+├── app.module.ts       # Root Application Module
+└── main.ts             # Application Entrypoint & Middleware Setup
 
-## Run tests
 
-```bash
-# unit tests
-$ npm run test
+🚀 Getting Started1. PrerequisitesEnsure you have the following installed on your machine:Node.js: v18+npm: v9+PostgreSQL Database2. InstallationClone or download the project, then install dependencies:Bashnpm install
+3. Environment ConfigurationCreate a .env file in the root directory and update the credentials:Extrait de code# Server Config
+PORT=3000
 
-# e2e tests
-$ npm run test:e2e
+# Database Connection
+DATABASE_URL="postgresql://user:password@localhost:5432/saas_db?schema=public"
 
-# test coverage
-$ npm run test:cov
-```
+# JWT Secrets
+AT_SECRET="your-super-secret-access-token-key"
+RT_SECRET="your-super-secret-refresh-token-key"
+4. Database SetupPush the Prisma schema to your database:Bashnpx prisma db push
+(Optional) Launch Prisma Studio to manage database records visually:Bashnpx prisma studio
+5. Running the ApplicationBash# Development mode with Hot-Reload
+npm run start:dev
 
-## Deployment
+# Production build & execution
+npm run build
+npm run start:prod
+Once running, access the API at http://localhost:3000/api/v1.🌐 API Reference & EndpointsMethodEndpointAccessDescriptionGET/api/docsPublicInteractive Swagger API DocumentationGET/api/v1/healthPublicSystem Health CheckPOST/api/v1/auth/local/signupPublicRegister a new userPOST/api/v1/auth/local/signinPublicAuthenticate user & receive tokensPOST/api/v1/auth/refreshRefresh TokenIssue new Access & Refresh Token pairPOST/api/v1/auth/logoutBearer TokenRevoke session & invalidate Refresh TokenGET/api/v1/admin-only-dataAdmin OnlyProtected route example for RBAC testing🛡️ Security Features OverviewBrute-Force Protection: Rate limited to 10 requests per minute per IP address.Global Auth Guard: Every endpoint is protected by default unless explicitly marked with @Public().Data Sanitization: DTOs automatically strip unapproved properties from incoming requests.📄 LicenseCommercial License — Feel free to use this Starter Kit to build and monetize as many SaaS products as you like!
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 💡 أشنو تدير دابا؟
+1. افتح ملف **`README.md`** فـ الجذر (Root) ديال المشروع واستبدل المحتوى ديالو بهاذ النص.
+2. تأكد بلي عندك ملف **`.env.example`** كيشبه لفقرة الـ Environment Configuration.
+3. مسح `node_modules` و `dist` وزيب (Zip) المشروع، وها المنتج ديالك واجد للرفع على Gumroad! 
