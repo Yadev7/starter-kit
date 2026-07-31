@@ -70,8 +70,3 @@ npm run build
 npm run start:prod
 Once running, access the API at http://localhost:3000/api/v1.🌐 API Reference & EndpointsMethodEndpointAccessDescriptionGET/api/docsPublicInteractive Swagger API DocumentationGET/api/v1/healthPublicSystem Health CheckPOST/api/v1/auth/local/signupPublicRegister a new userPOST/api/v1/auth/local/signinPublicAuthenticate user & receive tokensPOST/api/v1/auth/refreshRefresh TokenIssue new Access & Refresh Token pairPOST/api/v1/auth/logoutBearer TokenRevoke session & invalidate Refresh TokenGET/api/v1/admin-only-dataAdmin OnlyProtected route example for RBAC testing🛡️ Security Features OverviewBrute-Force Protection: Rate limited to 10 requests per minute per IP address.Global Auth Guard: Every endpoint is protected by default unless explicitly marked with @Public().Data Sanitization: DTOs automatically strip unapproved properties from incoming requests.📄 LicenseCommercial License — Feel free to use this Starter Kit to build and monetize as many SaaS products as you like!
 ---
-
-### 💡 أشنو تدير دابا؟
-1. افتح ملف **`README.md`** فـ الجذر (Root) ديال المشروع واستبدل المحتوى ديالو بهاذ النص.
-2. تأكد بلي عندك ملف **`.env.example`** كيشبه لفقرة الـ Environment Configuration.
-3. مسح `node_modules` و `dist` وزيب (Zip) المشروع، وها المنتج ديالك واجد للرفع على Gumroad! 
